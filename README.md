@@ -1,10 +1,17 @@
 # auth0-mdl-example
 
+Sample implementation for issuing and verifying mDL (mobile Driver Licenses) in Node.js.
+
 ## Run
 
 ```
 $ npm install
-$ npx ts-node src/index.ts
+
+# For issuing mDL
+$ npx ts-node src/issue.ts
+
+# For verifying mDL
+$ npx ts-node src/verify.ts
 ```
 
 ## References
