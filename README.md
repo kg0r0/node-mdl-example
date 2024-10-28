@@ -1,4 +1,4 @@
-# auth0-mdl-example
+# node-mdl-example
 
 Sample implementation for issuing and verifying mDL (mobile Driver Licenses) in Node.js.
 
