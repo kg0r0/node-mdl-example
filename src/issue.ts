@@ -51,32 +51,6 @@ q8mKCA9J8k/+zh//yKbN1bLAtdqPx7dnrDqV3Lg+
         family_name: 'Jones',
         given_name: 'Ava',
         birth_date: '2007-03-25',
-        issue_date: '2023-09-01',
-        expiry_date: '2028-09-31',
-        issuing_country: 'US',
-        issuing_authority: 'NY DMV',
-        document_number: '01-856-5050',
-        portrait: 'bstr',
-        driving_privileges: [
-          {
-            vehicle_category_code: 'C',
-            issue_date: '2023-09-01',
-            expiry_date: '2028-09-31',
-          },
-        ],
-        un_distinguishing_sign: 'tbd-us.ny.dmv',
-
-        sex: 'F',
-        height: '5\' 8"',
-        weight: '120lb',
-        eye_colour: 'brown',
-        hair_colour: 'brown',
-        resident_addres: '123 Street Rd',
-        resident_city: 'Brooklyn',
-        resident_state: 'NY',
-        resident_postal_code: '19001',
-        resident_country: 'US',
-        issuing_jurisdiction: 'New York',
       })
       .useDigestAlgorithm('SHA-256')
       .addValidityInfo({
@@ -89,6 +63,8 @@ q8mKCA9J8k/+zh//yKbN1bLAtdqPx7dnrDqV3Lg+
         alg: 'ES256',
       });
     issuerMDoc = new MDoc([document]).encode();
+    console.log('[*] Issuing a credential:');
+    console.log(inspect(issuerMDoc));
   }
 
   // This is what the DEVICE does to generate a response:
@@ -114,62 +90,19 @@ q8mKCA9J8k/+zh//yKbN1bLAtdqPx7dnrDqV3Lg+
                 path: ["$['org.iso.18013.5.1']['family_name']"],
                 intent_to_retain: false,
               },
-              {
-                path: ["$['org.iso.18013.5.1']['given_name']"],
-                intent_to_retain: false,
-              },
-              {
-                path: ["$['org.iso.18013.5.1']['birth_date']"],
-                intent_to_retain: false,
-              },
-              {
-                path: ["$['org.iso.18013.5.1']['issue_date']"],
-                intent_to_retain: false,
-              },
-              {
-                path: ["$['org.iso.18013.5.1']['expiry_date']"],
-                intent_to_retain: false,
-              },
-              {
-                path: ["$['org.iso.18013.5.1']['issuing_country']"],
-                intent_to_retain: false,
-              },
-              {
-                path: ["$['org.iso.18013.5.1']['issuing_authority']"],
-                intent_to_retain: false,
-              },
-              {
-                path: ["$['org.iso.18013.5.1']['issuing_jurisdiction']"],
-                intent_to_retain: false,
-              },
-              {
-                path: ["$['org.iso.18013.5.1']['document_number']"],
-                intent_to_retain: false,
-              },
-              {
-                path: ["$['org.iso.18013.5.1']['portrait']"],
-                intent_to_retain: false,
-              },
-              {
-                path: ["$['org.iso.18013.5.1']['driving_privileges']"],
-                intent_to_retain: false,
-              },
-              {
-                path: ["$['org.iso.18013.5.1']['un_distinguishing_sign']"],
-                intent_to_retain: false,
-              },
             ],
           },
         },
       ],
     };
 
-    const deviceResponseMDoc = await DeviceResponse.from(issuerMDoc)
+    deviceResponseMDoc = await DeviceResponse.from(issuerMDoc)
       .usingPresentationDefinition(PRESENTATION_DEFINITION_1)
       .usingHandover([mdocGeneratedNonce, clientId, responseUri, verifierGeneratedNonce])
       .authenticateWithSignature(DEVICE_JWK, 'ES256')
       .sign();
 
+    console.log('[*] Generating a device response:');
     console.log(inspect(deviceResponseMDoc));
   }
 })();
