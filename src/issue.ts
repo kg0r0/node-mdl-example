@@ -75,12 +75,13 @@ q8mKCA9J8k/+zh//yKbN1bLAtdqPx7dnrDqV3Lg+
 
   // This is what the DEVICE does to generate a response:
   {
+    // Parameters coming from the OID4VP transaction
     const mdocGeneratedNonce = '123456';
     const clientId = 'Cq1anPb8vZU5j5C0d7hcsbuJLBpIawUJIDQRi2Ebwb4';
     const responseUri = 'http://localhost:4000/api/presentation_request/dc8999df-d6ea-4c84-9985-37a8b81a82ec/callback';
     const verifierGeneratedNonce = 'abcdefg';
     const PRESENTATION_DEFINITION_1 = {
-      id: 'mdl-test-all-data',
+      id: 'family_name_only',
       input_descriptors: [
         {
           id: 'org.iso.18013.5.1.mDL',
@@ -104,7 +105,7 @@ q8mKCA9J8k/+zh//yKbN1bLAtdqPx7dnrDqV3Lg+
 
     deviceResponseMDoc = await DeviceResponse.from(issuerMDoc)
       .usingPresentationDefinition(PRESENTATION_DEFINITION_1)
-      .usingHandover([mdocGeneratedNonce, clientId, responseUri, verifierGeneratedNonce])
+      .usingSessionTranscriptForOID4VP(mdocGeneratedNonce, clientId, responseUri, verifierGeneratedNonce)
       .authenticateWithSignature(DEVICE_JWK, 'ES256')
       .sign();
 
