@@ -2,7 +2,7 @@ import { DeviceResponse } from "@auth0/mdl";
 import { MDoc, Document } from "@auth0/mdl";
 import { JWK } from 'jose';
 import { inspect } from "node:util";
-import fs from "node:fs";
+import cbor from 'cbor';
 
 (async () => {
   let issuerMDoc;
@@ -64,7 +64,13 @@ q8mKCA9J8k/+zh//yKbN1bLAtdqPx7dnrDqV3Lg+
       });
     issuerMDoc = new MDoc([document]).encode();
     console.log('[*] Issuing a credential:');
-    console.log(inspect(issuerMDoc));
+    console.log(inspect(issuerMDoc), {showHidden: false, depth: null, colors: true});
+    const decodedCredential = cbor.decodeAllSync(issuerMDoc);
+    console.log('[*] CBOR decoded credential:');
+    console.log(inspect(decodedCredential, {showHidden: false, depth: null, colors: true}));
+    console.log('[*] CBOR decoded credential (IssuerAuth):');
+    const issuerAuth = decodedCredential[0].documents[0].issuerSigned.issuerAuth;
+    console.log(inspect(issuerAuth, {showHidden: false, depth: null, colors: true}));
   }
 
   // This is what the DEVICE does to generate a response:
@@ -103,6 +109,8 @@ q8mKCA9J8k/+zh//yKbN1bLAtdqPx7dnrDqV3Lg+
       .sign();
 
     console.log('[*] Generating a device response:');
-    console.log(inspect(deviceResponseMDoc));
+    console.log(inspect(deviceResponseMDoc), {showHidden: false, depth: null, colors: true});
+    console.log('[*] Generating a device response (DeviceSignedDocument):');
+    console.log(inspect(deviceResponseMDoc.documents[0]), {showHidden: false, depth: null, colors: true});
   }
 })();

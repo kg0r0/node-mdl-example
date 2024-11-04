@@ -25,6 +25,6 @@ import fs from "node:fs";
   });
 
   //at this point the issuer and device signature are valids.
-  console.log(`[*] Verifying a credential: \n${inspect(mdoc)}`);
-  console.log(`[*] Getting diagnostic information: \n${inspect(diagnosticInfo)}`);
+  console.log(`[*] Verifying a credential: \n${inspect(mdoc), {showHidden: false, depth: null, colors: true}}`);
+  console.log(`[*] Getting diagnostic information: \n${inspect(diagnosticInfo, {showHidden: false, depth: null, colors: true})}`);
 })();

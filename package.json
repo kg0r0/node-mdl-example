@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "@auth0/mdl": "^0.3.0",
-    "buffer-tag": "^1.0.2"
+    "buffer-tag": "^1.0.2",
+    "cbor": "^10.0.2"
   },
   "devDependencies": {
     "ts-node": "^10.9.2",
