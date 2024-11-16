@@ -6,12 +6,7 @@ Sample implementation for issuing and verifying mDL (mobile Driver Licenses) in 
 
 ```
 $ npm install
-
-# For issuing mDL
-$ npx ts-node src/issue.ts
-
-# For verifying mDL
-$ npx ts-node src/verify.ts
+$ npx ts-node src/demo.ts
 ```
 
 ## References
